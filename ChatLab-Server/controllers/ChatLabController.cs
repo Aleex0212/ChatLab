@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace MyApp.Namespace
+namespace ChatLab_Server.controllers
 {
     [Route("api/[controller]")]
     [ApiController]
