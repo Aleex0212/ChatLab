@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using ChatLab_Server.models;
 using System.Text;
+using ChatLab_Server.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,8 +49,8 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(jwtKey),
-        ValidateIssuer = true,
-        ValidateAudience = true,
+        ValidateIssuer = false,
+        ValidateAudience = false,
         ClockSkew = TimeSpan.Zero
     };
 });
@@ -83,6 +84,10 @@ builder.Services.AddSwaggerGen(options =>
 });
 #endregion
 
+#region SignalR
+builder.Services.AddSignalR();
+#endregion
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -91,6 +96,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapHub<ChatHub>("/chathub");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
