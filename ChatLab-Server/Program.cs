@@ -88,6 +88,20 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddSignalR();
 #endregion
 
+#region CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularDevClient", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200").
+        AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
+});
+
+#endregion
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -96,6 +110,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowAngularDevClient");
 app.MapHub<ChatHub>("/chathub");
 app.UseHttpsRedirection();
 app.UseAuthentication();

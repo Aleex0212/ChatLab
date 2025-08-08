@@ -1,6 +1,10 @@
+import { AuthService } from './services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
+import { LoginModel } from './models/login.model';
+import { RegisterModel } from './models/register.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login.component',
@@ -11,28 +15,29 @@ import { Component } from '@angular/core';
 export class LoginComponent {
   isLogin: boolean = true;
 
-  loginData = {
-    email: '',
-    password: '',
-  };
-
-  registerData = {
+  loginModel: LoginModel = { email: '', password: '' };
+  registerModel: RegisterModel = {
     email: '',
     password: '',
     confirmPassword: '',
   };
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   toggleForm(type: 'login' | 'register') {
     this.isLogin = type === 'login';
   }
 
   onLogin() {
-    console.log('Login form submitted:', this.loginData);
-    // Call AuthService.login(this.loginData)
+    this.authService.login(this.loginModel).subscribe({
+      next: (response) => {
+        if (response.token !== null) this.router.navigate(['/home']);
+      },
+    });
   }
 
   onRegister() {
-    console.log('Register form submitted:', this.registerData);
-    // Call AuthService.register(this.registerData)
+    console.log('Register form submitted:', this.registerModel);
   }
 }
+// this.authService.register(this.registerModel);

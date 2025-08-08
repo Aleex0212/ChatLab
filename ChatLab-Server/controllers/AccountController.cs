@@ -52,13 +52,13 @@ namespace ChatLab_Server.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var user = await _userManager.FindByNameAsync(loginModel.Username);
+            var user = await _userManager.FindByEmailAsync(loginModel.Email);
             if (user == null)
-                return Unauthorized("Invalid username or password");
+                return Unauthorized("Invalid email or password");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginModel.Password, false);
             if (!result.Succeeded)
-                return Unauthorized("Invalid username or password");
+                return Unauthorized("Invalid email or password");
 
             var claims = new[]
             {
