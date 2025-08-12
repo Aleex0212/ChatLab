@@ -4,9 +4,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
+using ChatLab_Server.SignalR;
 using ChatLab_Server.models;
 using System.Text;
-using ChatLab_Server.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -112,7 +112,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowAngularDevClient");
 app.MapHub<ChatHub>("/chathub");
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

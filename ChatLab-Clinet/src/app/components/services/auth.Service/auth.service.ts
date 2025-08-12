@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { LoginModel } from '../models/login.model';
+import { LoginModel } from './models/login.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { LoginResponseModel } from '../models/login-response.model';
+import { LoginResponseModel } from './models/login-response.model';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { LoginResponseModel } from '../models/login-response.model';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  private readonly apiUrl: string = 'http://localhost:5093/api/account/login';
+  private readonly apiUrl: string = environment.apiUrl;
 
   login(loginModel: LoginModel): Observable<LoginResponseModel> {
     return this.http
@@ -20,5 +21,9 @@ export class AuthService {
           sessionStorage.setItem('token', response.token)
         )
       );
+  }
+
+  GetToken(): string | null {
+    return sessionStorage.getItem('token');
   }
 }

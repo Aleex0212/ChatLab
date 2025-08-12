@@ -1,7 +1,10 @@
 <div class="min-h-screen flex items-center justify-center bg-base-200 p-4">
   <div class="w-full max-w-md bg-base-100 shadow-xl rounded-xl p-6 space-y-6">
+    <div class="flex">
+      <app-theme-toggle class="ml-auto"></app-theme-toggle>
+    </div>
     <div class="text-center">
-      <h2 class="text-2xl font-bold text-primary">ChatLab</h2>
+      <h2 class="text-4xl font-bold text-primary animate-bounce">ChatLab</h2>
       <p class="text-sm text-base-content/60">
         Real-time conversations, Simplified
       </p>
@@ -60,10 +63,16 @@
         <span>Password</span>
       </label>
 
-      <button type="submit" class="btn btn-primary w-full">Login</button>
-
+      <button type="submit" class="btn btn-primary w-full animate-pulse">
+        Login
+      </button>
+      <app-alert
+        *ngIf="showAlert"
+        type="error"
+        message="Login failed. Please try again."
+      ></app-alert>
       <div class="text-center">
-        <a href="#" class="link text-sm">Forgot password?</a>
+        <a href="#" class="text-sm">Forgot password?</a>
       </div>
     </form>
 
@@ -101,7 +110,9 @@
         <span>Confirm Password</span>
       </label>
 
-      <button type="submit" class="btn btn-success w-full">Register</button>
+      <button type="submit" class="btn btn-success w-full animate-pulse">
+        Register
+      </button>
     </form>
 
     <div class="divider">or</div>
