@@ -1,9 +1,9 @@
-import { NgClass } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-alert',
-  imports: [NgClass],
+  imports: [NgClass, CommonModule],
   templateUrl: './alert.component.html',
   styleUrl: './alert.component.scss',
 })

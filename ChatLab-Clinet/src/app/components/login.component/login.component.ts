@@ -1,12 +1,12 @@
-import { AuthService } from '../services/auth.Service/auth.service';
+import { ThemeToggleComponent } from '../theme-toggle.component/theme-toggle.component';
+import { RegisterModel } from '../../services/auth.Service/models/register.model';
+import { LoginModel } from '../../services/auth.Service/models/login.model';
+import { AuthService } from '../../services/auth.Service/auth.service';
+import { AlertComponent } from '../alert.component/alert.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
-import { LoginModel } from '../services/auth.Service/models/login.model';
-import { RegisterModel } from '../services/auth.Service/models/register.model';
 import { Router } from '@angular/router';
-import { AlertComponent } from '../alert.component/alert.component';
-import { ThemeToggleComponent } from '../theme-toggle.component/theme-toggle.component';
 
 @Component({
   selector: 'app-login.component',

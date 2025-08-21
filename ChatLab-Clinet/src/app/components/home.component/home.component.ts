@@ -1,11 +1,12 @@
-import { AuthService } from '../services/auth.Service/auth.service';
+import { AuthService } from '../../services/auth.Service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Topnavbar } from '../topnavbar/topnavbar';
 import { Router } from '@angular/router';
+import { DockComponent } from '../dock.component/dock.component';
 
 @Component({
   selector: 'app-home.component',
-  imports: [Topnavbar],
+  imports: [Topnavbar, DockComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
