@@ -93,18 +93,14 @@ builder.Services.AddSingleton<IDictionary<string, UserRoomConnection>>(opt =>
 #region CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngularDevClient", policy =>
+    options.AddPolicy("AllowAngularClient", policy =>
     {
-        policy.WithOrigins("http://localhost:4200").
-        AllowAnyHeader()
+        policy.WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
     });
 });
-#endregion
-
-#region 
-
 #endregion
 
 var app = builder.Build();
@@ -115,7 +111,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowAngularDevClient");
+app.UseCors("AllowAngularClient");
 app.MapHub<ChatHub>("/chathub");
 app.UseAuthentication();
 app.UseAuthorization();

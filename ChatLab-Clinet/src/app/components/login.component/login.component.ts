@@ -31,11 +31,11 @@ export class LoginComponent {
     this.isLogin = type === 'login';
   }
 
-  onLogin() {
+  onLogin(): void {
     this.authService.login(this.loginModel).subscribe({
       next: (response) => {
         if (response.token !== null) {
-          this.router.navigate(['/home']);
+          this.router.navigate(['home']);
         } else {
           this.showAlert = true;
           setTimeout(() => (this.showAlert = false), 2000);
@@ -48,7 +48,7 @@ export class LoginComponent {
     });
   }
 
-  onRegister() {
+  onRegister(): void {
     // this.authService.register(this.registerModel);
   }
 }

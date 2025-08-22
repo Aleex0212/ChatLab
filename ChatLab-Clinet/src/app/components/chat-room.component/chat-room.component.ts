@@ -21,14 +21,14 @@ export class ChatRoomComponent implements OnInit {
     this.connectChatServer();
   }
 
-  async connectChatServer() {
+  async connectChatServer(): Promise<void> {
     const connected = await this.chatService.startConnection();
     if (connected) {
       this.chatService.joinRoom(this.room);
     }
   }
 
-  sendMessage() {
+  sendMessage(): void {
     if (this.messageText.trim()) {
       this.chatService.sendMessage(this.messageText);
       this.messageText = '';
