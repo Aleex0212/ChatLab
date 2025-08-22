@@ -49,7 +49,6 @@ export class LoginComponent {
   }
 
   onRegister() {
-    console.log('Register form submitted:', this.registerModel);
     // this.authService.register(this.registerModel);
   }
 }

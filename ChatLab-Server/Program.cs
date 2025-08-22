@@ -86,6 +86,8 @@ builder.Services.AddSwaggerGen(options =>
 
 #region SignalR
 builder.Services.AddSignalR();
+builder.Services.AddSingleton<IDictionary<string, UserRoomConnection>>(opt =>
+    new Dictionary<string, UserRoomConnection>());
 #endregion
 
 #region CORS
@@ -99,6 +101,9 @@ builder.Services.AddCors(options =>
         .AllowCredentials();
     });
 });
+#endregion
+
+#region 
 
 #endregion
 

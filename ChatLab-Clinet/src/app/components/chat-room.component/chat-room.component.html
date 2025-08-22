@@ -4,6 +4,12 @@
 
 <div>
   <div class="relative flex">
-    <input type="text" placeholder="Say something" class="input w-full" />
+    <input
+      type="text"
+      placeholder="Say something"
+      class="input w-full"
+      [(ngModel)]="messageText"
+      (keyup.enter)="sendMessage()"
+    />
   </div>
 </div>
