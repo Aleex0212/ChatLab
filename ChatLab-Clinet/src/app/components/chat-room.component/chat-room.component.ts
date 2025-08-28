@@ -6,19 +6,21 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-chat-room.component',
+  selector: 'app-chat-room',
   imports: [ChatBubbleComponent, DockComponent, Topnavbar, FormsModule],
   templateUrl: './chat-room.component.html',
-  styleUrl: './chat-room.component.scss',
+  styleUrls: ['./chat-room.component.scss'],
 })
 export class ChatRoomComponent implements OnInit {
-  messageText: string = '';
   private room: string = 'chatroom';
+  messageText: string = '';
+  messages: { user: string; message: string }[] = [];
 
   constructor(private chatService: ChatService) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.connectChatServer();
+    this.subscribeToMessages();
   }
 
   async connectChatServer(): Promise<void> {
@@ -33,5 +35,12 @@ export class ChatRoomComponent implements OnInit {
       this.chatService.sendMessage(this.messageText);
       this.messageText = '';
     }
+  }
+
+  private subscribeToMessages() {
+    this.chatService.onMessageReceived().subscribe(([user, message]) => {
+      this.messages.push({ user, message });
+      console.log(`received message: User: ${user}, Message: ${message}`);
+    });
   }
 }

@@ -90,7 +90,7 @@ builder.Services.AddSingleton<IDictionary<string, UserRoomConnection>>(opt =>
     new Dictionary<string, UserRoomConnection>());
 #endregion
 
-#region CORS
+#region CORS 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularClient", policy =>

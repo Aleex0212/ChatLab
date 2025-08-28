@@ -1,7 +1,8 @@
 import { environment } from '../../../environments/environment.development';
 import * as signalR from '@microsoft/signalR';
 import { Injectable } from '@angular/core';
-import { ConsoleLogger } from '@microsoft/signalR/dist/esm/Utils';
+import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -18,19 +19,35 @@ export class ChatService {
 
     try {
       await this.hubConnection.start();
+      this.hubConnection.onclose((error) => {
+        console.error('SignalR connection closed', error);
+      });
       return true;
     } catch (err) {
+      console.error('Connection error:', err);
       return false;
     }
   }
 
-  public joinRoom(room: string) {
-    return this.hubConnection.invoke('JoinRoom', room);
+  public async joinRoom(room: string): Promise<void> {
+    try {
+      await this.hubConnection.invoke('JoinRoom', room);
+    } catch (err) {
+      console.error(`Error joining room: ${room}`, err);
+    }
   }
 
   public sendMessage(message: string): void {
     this.hubConnection
       .invoke('SendMessage', message)
-      .catch((err) => console.log(err));
+      .catch((err) => console.error('SendMessage error:', err));
+  }
+
+  onMessageReceived(): Observable<[string, string]> {
+    return new Observable((observer) => {
+      this.hubConnection.on('ReceiveMessage', (user, message) => {
+        observer.next([user, message]);
+      });
+    });
   }
 }

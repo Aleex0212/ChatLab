@@ -31,12 +31,10 @@ namespace ChatLab_Server.SignalR
                 Room = room
             };
 
-            _logger.LogInformation($"ConnectionId {Context.ConnectionId} added to room {room}");
+            _logger.LogInformation($"ConnectionId {Context.ConnectionId} joined the room {room}");
 
             await Clients.Group(room)
-                .SendAsync("receiveMessage", "ChatLab", $"{user.UserName} has joined the group", DateTime.Now);
-
-            await SendConnectedUser(room);
+                .SendAsync("ReceiveMessage", $"{user.UserName} has joined the room");
         }
 
         public async Task SendMessage(string message)
@@ -44,22 +42,12 @@ namespace ChatLab_Server.SignalR
             if (_connection.TryGetValue(Context.ConnectionId, out var userRoomConnection))
             {
                 var user = Context.User?.Identity?.Name ?? "Unknown";
-                await Clients.Group(userRoomConnection.Room!)
-                    .SendAsync("receiveMessage", user, message, DateTime.Now);
-                _logger.LogInformation($"User: {user}, Message: {message} Time: {DateTime.Now}");
-            }
-        }
 
-        public Task SendConnectedUser(string room)
-        {
-            var users = _connection.Keys
-                .Where(connId => _connection[connId].Room == room)
-                .Select(connId =>
-                {
-                    var principal = Context.User;
-                    return principal?.Identity?.Name ?? "Unknown";
-                });
-            return Clients.Group(room).SendAsync("connectedUser", users);
+                await Clients.Group(userRoomConnection.Room!)
+                    .SendAsync("ReceiveMessage", user, message);
+
+                _logger.LogInformation($"User: {user}, Message: {message}");
+            }
         }
     }
 }
